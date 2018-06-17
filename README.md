@@ -17,6 +17,10 @@ easily converted into Jupyter notebooks.
 # Installation of Mayavi
 
 To be able to teach or learn this material you must have Mayavi installed.
-Up-to-date information is available on the
+
+See the [installation document](./installation.md) for installation
+instructions for different packaging environments.
+
+Up-to-date information on Mayavi installation is also available on the
 [Mayavi github page](https://github.com/enthought/mayavi) or with the
 [Mayavi installation documentation](http://docs.enthought.com/mayavi/mayavi/installation.html).
