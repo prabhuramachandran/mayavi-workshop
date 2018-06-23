@@ -1,0 +1,122 @@
+\documentclass[14pt,compress]{beamer}
+
+% Modified from: generic-ornate-15min-45min.de.tex
+\mode<presentation>
+{
+  \usetheme{default}
+  %\useoutertheme{infolines}
+  \setbeamercovered{invisible}
+}
+
+% To remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+%\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{pgf}
+\usepackage{amsmath}
+\usepackage{movie15}
+
+
+% Taken from Fernando's slides.
+\usepackage{ae,aecompl}
+\usepackage{mathpazo,courier,euler}
+\usepackage[scaled=.95]{helvet}
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+\lstset{language=Python,
+  basicstyle=\small\ttfamily,
+  commentstyle=\color{red}\itshape,
+  stringstyle=\color{darkgreen},
+  showstringspaces=false,
+  keywordstyle=\color{blue}\bfseries,
+  moredelim=**[is][\btHL]{`}{`},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
+\setbeamercolor{emphbar}{bg=blue!20, fg=black}
+\newcommand{\emphbar}[1]
+{\begin{beamercolorbox}[rounded=true]{emphbar}
+      {#1}
+ \end{beamercolorbox}
+}
+\newcounter{time}
+\setcounter{time}{0}
+\newcommand{\inctime}[1]{\addtocounter{time}{#1}{\tiny \thetime\ m}}
+\newcommand{\inblue}[1]{{\color{blue}#1}}
+
+\newcommand{\typ}[1]{\lstinline{#1}}
+\newcommand{\myemph}[1]{\structure{\emph{#1}}}
+\newcommand{\PythonCode}[1]{\lstinline{#1}}
+\newcommand{\py}[1]{\PythonCode{#1}}
+
+\newcommand{\mysection}[1]{\Large \begin{center}\myemph{#1}\end{center}}
+
+\newcommand{\kwrd}[1]{ \texttt{\textbf{\color{blue}{#1}}}  }
+
+\newcommand\BackgroundPicture[1]{%
+  \setbeamertemplate{background}{%
+      \parbox[c][\paperheight]{\paperwidth}{%
+      \vfill \hfill
+        \pgfimage[width=1.0\paperwidth,height=1.0\paperheight,interpolate=true]{#1}
+ \hfill \vfill
+}}}
+
+% For non-wide pictures, set the width so that the height scales
+% appropriately.
+\newcommand\BackgroundPictureWidth[1]{%
+  \setbeamertemplate{background}{%
+      \parbox[c][\paperheight]{\paperwidth}{%
+      \vfill \hfill
+        \pgfimage[width=1.0\paperwidth,interpolate=true]{#1}
+ \hfill \vfill
+}}}
+
+
+% For shorter pictures, set the height so that the width scales
+% appropriately.
+\newcommand\BackgroundPictureHeight[1]{%
+  \setbeamertemplate{background}{%
+      \parbox[c][\paperheight]{\paperwidth}{%
+      \vfill \hfill
+        \pgfimage[height=1.0\paperheight,interpolate=true]{#1}
+ \hfill \vfill
+}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pgfdeclareimage[height=0.75cm]{iitblogo}{iitblogo}
+%\logo{\pgfuseimage{iitblogo}}
+
+%% Delete this, if you do not want the table of contents to pop up at
+%% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \Large
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \Large
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
