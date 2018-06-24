@@ -1,0 +1,433 @@
+cells:
+
+- markdown: |
+    # Using `mayavi.mlab`: Animation
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+
+    <br/>
+
+    **NGCM Summer School,**
+
+    **Southampton, June 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - Getting started with `mlab`
+    - Using `mlab`
+       - The basics
+       - **Animation**
+    - Going deeper
+       - The pipeline
+       - Data sources
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %gui qt
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import numpy as np
+    from mayavi import mlab
+
+- markdown: |
+    ## Animation
+
+    * Specific to `mlab`
+    * `points3d, plot3d, surf, mesh`, `quiver3d, contour3d` etc.
+    * Returned object has `mlab_source` attribute
+    * Setting attributes updates the plot
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Animating data
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+
+- markdown: |
+    ## Animation: `mlab_source.set`
+    Use `mlab_source.set` to change multiple values
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    for i in range(10):
+        s.mlab_source.set(
+            scalars=x*0.1*(i+1), y=y+i*0.5
+        )
+
+
+- markdown: |
+    ## Animation: `mlab_source.reset`
+
+    Use reset if shape changes
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    x, y = mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1, representation='wireframe')
+
+    fig = mlab.gcf()
+
+- code: |
+    for i in range(5):
+      sl = slice(0, 3, 1.0/(i+2))
+      x, y = mgrid[sl, sl]
+      sc = x*x*0.05*(i+1)
+      s.mlab_source.reset(x=x, y=y, scalars=sc)
+      fig.scene.reset_zoom()
+
+- markdown: |
+    ## `set` vs `reset`
+
+    * `mlab_source.set`: multiple attributes
+
+    * If you change the shape of the arrays use the
+      `reset` method
+
+    * See `mlab.test_*_anim`  functions for more examples!
+
+    * Use `mlab.savefig` : to dump files
+
+    * `savefig`  supports a variety of output
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Python Aside: Generators
+
+    * Powerful feature
+
+    * Easy to learn
+
+    * Easy to iterate over a generator
+
+    * Think of `for` loops
+
+    * How would you write a `range` function?
+
+    * Introduce the `yield` keyword
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Python Aside: Generators
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def counter(n):
+        count = 0
+        while count < n:
+            yield count
+            count += 1
+
+- code: |
+    c = counter(2)
+    next(c)
+
+- code: |
+    next(c)
+
+- code: |
+    next(c)
+
+
+- markdown: |
+    ## Python Aside: Generators
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    for i in counter(4):
+        print(i)
+
+- code: |
+    [i*i for i in counter(4)]
+
+- markdown: |
+    As an analogy see this:
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    for line in open('my_file.txt'):
+        print(line)
+
+- markdown: |
+    Allows one to iterate over a file.
+
+- markdown: |
+    ## Python Aside: Generators Recap
+
+    * Easy to use
+
+    * Easy to write
+
+    * Generator yields control within the loop and resumes!
+
+    * Very different from `return`
+    * `yield` : allows you to abstract a loop
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Python Aside: Decorators
+
+    * Another powerful feature
+
+    * Allows one to modify a callable object (functions, methods)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Trivial example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def deco(func):
+        return func
+
+- code: |
+    @deco
+    def greet():
+        print("Hola!")
+
+- code: |
+    # @deco is equivalent to:
+    greet = deco(greet)
+
+
+- markdown: |
+    ## Non-trivial example
+
+    Modify the function to print "Hello" before the function is called
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def deco(func):
+        def new_func(*args, **kw):
+            print("Hello")
+            func(*args, **kw)
+        return new_func
+
+- code: |
+    @deco
+    def greet():
+        print("Hola!")
+
+- code: |
+    greet()
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Exercise
+
+    Modify decorator `deco` to print "goodbye" after executing the
+    function.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def deco(func):
+        def new_func(*args, **kw):
+            print("Hello")
+            r = func(*args, **kw)
+            print("goodbye")
+            return r
+        return new_func
+
+
+- markdown: |
+    ## Animate decorator
+
+    * `mlab.animate`
+    * Useful when interactivity is desired
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    @mlab.animate
+    def anim():
+        x, y = np.mgrid[0:3:1,0:3:1]
+        s = mlab.surf(x, y, x*0.1)
+        for i in range(25):
+            s.mlab_source.set(
+                scalars = x*0.1*(i+1))
+            yield
+
+- code: |
+    a = anim()
+
+
+- markdown: |
+    ## Notes
+
+    * Only works with a generator
+
+    * Note that the UI is fully interactive
+
+    * Can adjust the delay
+
+    Can also do,
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    @mlab.animate(delay=100, ui=False)
+    def anim():
+        x, y = np.mgrid[0:3:1,0:3:1]
+        s = mlab.surf(x, y, x*0.1)
+        for i in range(25):
+            s.mlab_source.set(
+                scalars = x*0.1*(i+1))
+            yield
+
+- markdown: |
+    ## Exercise
+
+    Create a stack of images animating the example below such that it looks
+    like the wave is traveling.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y = mgrid[-3:3:100j,-3:3:100j]
+    z = sin(x*x + y*y)
+    s = mlab.surf(x, y, z)
+
+- markdown: |
+    ## Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Your solution here!
+
+- markdown: |
+    ## Automatic movie recording
+
+    * Click on "record" on the scene movie tab
+
+    * Or try the following
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    f = mlab.figure()
+    f.scene.movie_maker.record = True
+    mlab.test_mesh_sphere_anim()
+
+- markdown: |
+    ## Recap
+
+    * Motivation and history of Mayavi
+
+    * Overview of Mayavi features
+
+    * Using `mlab`
+    * Animating data
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Can we do more?
+
+     Yes!
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  language: python
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
