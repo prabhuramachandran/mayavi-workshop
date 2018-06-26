@@ -1,0 +1,145 @@
+cells:
+
+- markdown: |
+    # VTK/Mayavi Datasets and Filters
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+
+    <br/>
+
+    **NGCM Summer School,**
+
+    **Southampton, June 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Illustration of how to view unstructured points
+
+    Let us say you have a random collection of points and scalars associated
+    with them but DO NOT know the topology. What do you do?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Some random data.
+    import numpy as np
+    x, y = np.random.random((2, 100))
+    s = x*x + y*y
+    z = np.ones_like(x)
+
+- markdown: |
+    ## Let's visualize it!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %gui qt
+    from mayavi import mlab
+    from tvtk.api import tvtk
+
+- code: |
+    # If you want a different background!
+    fig = mlab.figure(bgcolor=(1,1,1), fgcolor=(0,0,0))
+
+- code: |
+    src = mlab.pipeline.scalar_scatter(x, y, z, s)
+
+- code: |
+    ug = mlab.pipeline.delaunay2d(src)
+
+- code: |
+    surf = mlab.pipeline.surface(ug)
+    surf.actor.property.edge_visibility = True
+
+- markdown: |
+    ## A low-level way to create the points
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Doing the same thing  as scalar_scatter in a lower level.
+    mlab.clf()
+    points = np.c_[x,y,z]
+    points.shape
+    mesh = tvtk.PolyData(points=points)
+    verts = np.arange(len(x), dtype=int)
+    verts.shape = 100,1
+    mesh.verts = verts
+    mesh.point_data.scalars = s
+    mesh.point_data.scalars.name = 'temperature'
+    mlab.clf()
+    src = mlab.pipeline.add_dataset(mesh)
+
+
+- markdown: |
+    ### Example in 3D
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Some random data.
+    import numpy as np
+    n = 1000
+    x, y, z = np.random.random((3, n))
+    s = x*x + y*y + z*z
+    mlab.clf()
+
+
+- code: |
+    src = mlab.pipeline.scalar_scatter(x, y, z, s)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    ug = mlab.pipeline.delaunay3d(src)
+    iso = mlab.pipeline.iso_surface(ug, contours=8)
+
+
+- markdown: |
+    ## Exercise
+
+    Modify the above 3D example to construct the points in all quadrants, the
+    current set of points only lie in the first quadrant since $0 < x,y,z <
+    1$.
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  kernelspec:
+    display_name: Python 2
+    language: python
+    name: python2
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 2
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython2
+    version: 2.7.11
+nbformat: 4
+nbformat_minor: 2
