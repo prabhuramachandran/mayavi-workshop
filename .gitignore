@@ -5,13 +5,13 @@
 *.nav
 *.snm
 *.toc
-*.pdf
 *.vrb
 *.out
 *.sty
 *.pyc
 *.zip
 *.gz
+*.doit.db
 *~
 **/auto
 **/.ipynb_checkpoints
