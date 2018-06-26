@@ -1,0 +1,774 @@
+cells:
+
+- markdown: |
+    # The `mayavi2` application
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+    <br/>
+
+    **NGCM Summer School,**
+    **Southampton, June 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - Overview
+    - UI features
+    - Command line arguments
+    - `mlab` integration
+    - Sources/Modules/Filter outline
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Introduction
+
+    * Visualization without scripting
+
+    * Especially useful with data files
+
+    * Can be scripted
+
+    * Supports `mlab`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    <img height="100%" src="MEDIA/m2/m2_app3_3.png"/>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Features
+
+    * Complete UI
+    * Powerful command line options
+    * Embedded Python
+    * Fully scriptable
+    * Reads different file formats
+    * Drag-drop onto shell
+    * Script recording
+    * Extensible
+    * Plug-in design using Envisage
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## UI features
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Demo of UI features
+
+    * Basic UI
+
+    * Python shell integration
+
+    * Time-series support
+
+    * Script recording
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Command line arguments
+    ### Overview
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    !mayavi2 -h
+
+  id: 0
+
+- markdown: |
+    * `-d datafile.ext` : Load data file
+
+    * `-f FilterName` : Load filter
+
+    * `-m ModuleName` : Load module
+
+    * `-s python-string` : Evaluate Python expression
+
+    * `-x file.py` : Execute Python code
+
+
+- markdown: |
+    ## Advanced options
+
+    * `-n` : new scene
+
+    * `-M` : new module manager
+
+    * `-o` : offscreen mode
+
+    * `-z filename` : load saved visualization
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Simple example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %cd data
+
+  id: 1
+
+- code: |
+    !mayavi2 -d room_vis.wrl -d fire_ug.vtu -m Outline  -m ScalarCutPlane
+
+  id: 2
+
+- markdown: |
+    ## Scripting from the command line
+
+    * `-s python-code`  is very powerful
+
+    * Takes Python expressions
+
+    * Applies to the last module/filter
+
+    * Can be called multiple times
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## An example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    !mayavi2 -d fire_ug.vtu -m Outline -s "actor.property.color = (1,0,0)" \
+     -s "scene.save('test.png', size=(800, 800))"
+
+  id: 3
+
+- markdown: |
+    ## Bit more complex
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    !mayavi2 -d room_vis.wrl -d fire_ug.vtu \
+     -m Outline  -m ScalarCutPlane \
+    -s "enable_contours = True" \
+    -s "implicit_plane.widget.normal_to_z_axis=1"
+
+  id: 4
+
+- markdown: |
+    ## Exercise
+
+    * Visualize the `fire_ug.vtu`  dataset along with the
+      `room_vis.wrl`  file
+
+    * Use one scalar cut plane with its normal along the y axis
+
+    * Add an iso-contour with the temperature set to 400.
+
+    * Do all these from the command line
+
+    * Hint: use the embedded Python shell in the app
+
+    * Hint: use script recording
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    !mayavi2 -d room_vis.wrl -d fire_ug.vtu \
+     -m Outline  -m ScalarCutPlane \
+    -s "enable_contours = True" \
+    -s "implicit_plane.widget.normal_to_y_axis=1" \
+    -m IsoSurface \
+    -s "contour.contours=[400]"
+
+  id: 5
+
+- markdown: |
+    ## `mlab` integration
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Using `mlab`
+
+    * Can import and use mlab
+
+    * Opening data: `mlab.pipeline.open`
+    * Add dataset: `mlab.pipeline.add_dataset`
+    * Use `lower_case_with_underscores`
+    * So `ScalarCutPlane`  $\rightarrow$ `mlab.pipeline.scalar_cut_plane`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Sources/Modules/Filter outline
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Overview
+
+    * Source: produce data
+
+    * Filter: filters the data producing more data
+
+    * Module: visualizes the data
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Sources
+
+    * Open supported file: *.vtk, *.xml, *.vt,
+        *.pvt), VRML2 (*.wrl), 3D Studio (*.3ds), PLOT3D
+        (*.xyz), STL, BYU, RAW, PLY,  PDB,  SLC,  FACET,  OBJ,  AVSUCD
+        (*.inp),  GAMBIT (*.neu),  Exodus  (*.exii),  PNG,  JPEG,  BMP,
+        PNM, DCM, DEM, MHA, MHD, MINC, XIMG, TIFF,
+
+    * `ParametricSurface`
+    * `PointLoad`
+    * `BuiltinImage`
+    * `BuiltinSurface`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Simple Annotation Modules
+
+    * Axes
+
+    * Outline
+
+    * OrientationAxes
+
+    * Text, Text3D
+
+    * Labels
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Common Scalar Modules
+
+    * Surface
+
+    * IsoSurface
+
+    * Glyph
+
+    * ScalarCutPlane
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Vector visualization Modules
+
+    * VectorCutplane
+
+    * Vectors
+
+    * WarpVectorCutPlane
+
+    * Streamline
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Demonstration
+
+    * Load the `fire_ug.vtu`  file
+
+    * Demo of the common modules
+
+    * Demo SliceUG
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Data-specific modules
+
+    * GridPlane
+
+    * ContourGridPlane
+
+    * CustomGridPlane
+
+    * StructuredGridOutline
+
+    * SliceUnstructuredGrid
+
+    * ImagePlaneWidget
+
+    * ImageActor
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Demonstration
+
+    * Load the `heart.vti`  file
+
+    * Demo of the structured grid modules
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Exercise
+
+    * Load a cube of numpy data
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    sl = slice(-5, 5, 64j)
+    x, y, z = mgrid[sl,sl,sl]
+    scalar = np.sin(np.sqrt(x*x*0.5 + y*y + z*z*2))
+
+  id: 6
+
+- markdown: |
+    * Visualize the data from the UI
+
+    * Use the image plane widget
+
+
+- markdown: |
+    ## Solution
+
+    Hint: use mlab
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    src = mlab.pipeline.scalar_field(
+        x, y, z, scalar
+    )
+    mlab.pipeline.image_plane_widget(src)
+
+  id: 7
+
+- markdown: |
+    ## Advanced modules
+
+    * TensorGlyph
+
+    * HyperStreamline
+
+    * Volume: for volume rendering
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * Not always needed
+
+    * Branch the pipeline
+
+    * Very powerful
+
+    * Use modules to visualize filtered results
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * CellDerivatives: Computes derivatives from input point scalar and vector
+      data, produces cell data on the gradients. Used to calcuate the
+      vorticity approximately.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * CellToPointData: Transforms cell attribute data to point data by
+      averaging the cell data from the cells at the point.
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Filters
+
+    * Contour: generate iso-surfaces on any input dataset.
+    * CutPlane: slice through any dataset.  Provides a 3D widget interface
+      to position and move the slice interactively.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * DataSetClipper: Clips input data using a 3D widget.
+
+    * DecimatePro:  Reduces number of triangles in mesh.
+
+    * Delaunay2D: 2D Delaunay triangulation.
+
+    * Delaunay3D: 3D Delaunay triangulation.
+
+    * ElevationFilter:  Generate scalar data from the elevation in a given
+      direction.
+
+    * ExtractEdges: Turns edges into lines.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * ExtractGrid: select a portion of, or subsample an input dataset with
+      implicit topology.
+
+    * ExtractTensorComponents: extract components from a tensor field.
+
+    * ExtractUnstructuredGrid: select a part of an unstructured grid.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * ExtractVectorComponents: select any of the three components of an
+      input vector data attribute.
+
+    * ExtractVectorNorm: Computes the norm (Eucliedean) of the input vector
+      data (with optional scaling between ).
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * GaussianSplatter: Splat input point data onto a grid.
+
+    * GreedyTerrainDecimation: triangulation of image data after simplifying
+      it.
+
+    * ImageChangeInformation: change the spacing and origin of an input
+      ImageData dataset.
+
+    * ImageDataProbe: probe any dataset using a Structured Points dataset.
+      Also allows to convert the scalar data to an unsigned short
+      to facilitate volume visualization.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * MaskPoints: Selectively passes the input points downstream.  This can be
+        used to subsample the input points.  *Only passes through points.*
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * PointToCellData: Convert point to cell data.
+
+    * PolyDataNormals: Computes normals from input data.  Gives meshes a
+      smoother appearance.
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Filters
+
+    * QuadricDecimation:  Simplifies triangles of a mesh.
+
+    * SelectOutput: Select one among several of the outputs of a given
+      input. Useful for a multi-block data source.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * SetActiveAttribute: set the active data attribute (scalars, vectors
+        and tensors) on a VTK dataset.  Useful to compute contours of one scalar
+        on the contour of another scalar.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * Stripper: Create triangle strips and/or poly-lines. Useful for
+        regularizing broken up surfaces, such as those created by the Tube filter.
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Filters
+
+    * Threshold: Threshold input points on scalar value.
+
+    * TransformData: linear transformation to input data using a
+      tvtk.BoxWidget.  This does not work with
+      ImageData/StructuredPoints/RectilinearGrid.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Filters
+
+    * TriangleFilter: Converts input polygons and triangle strips to
+      triangles.  This is useful when you have a downstream filter that only
+      processes triangles.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * Tube: Turns lines into tubes.
+
+    * UserDefined: This filter lets the user define their own filter
+      dynamically/interactively from VTK filters.
+
+    * Vorticity: This filter computes the vorticity of an input vector
+      field.
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Filters
+
+    * WarpScalar: Warps the input data along a particular direction (either
+      the normals or a specified direction) with a scale specified by the local
+      scalar value.  Useful for making carpet plots.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    * WarpVector Warps the input data along a the point vector attribute
+      scaled as per a scale factor.  Useful for showing flow profiles or
+      displacements.
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Exercise
+
+    Use each of the sources, ParametricSurface, BuiltinSurface,
+    BuiltinImage, PointLoad and visualize them.
+
+    Use the command line interface and the UI.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Demo
+
+    Consider a collection of points sampled from a volume, how do we find
+    contours for this data?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Some random data.
+    import numpy as np
+    x, y = np.random.random((2, 100))
+    s = x*x + y*y
+    z = np.ones_like(x)
+
+  id: 8
+
+- markdown: |
+    ## Demo: solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Load up the data
+    src = mlab.pipeline.scalar_scatter(x, y, z, s)
+
+  id: 9
+
+- code: |
+    mlab.clf()
+    src = mlab.pipeline.add_dataset(mesh)
+
+  id: 10
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Demo: solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    ug = mlab.pipeline.delaunay2d(src)
+    surf = mlab.pipeline.surface(ug)
+    surf.actor.property.edge_visibility = True
+
+  id: 11
+
+- markdown: |
+    ## Exercise
+    Do the same thing but now in 3D and plot contours.
+
+    Hint: Use the Delaunay3D filter.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
+
+# ---------------------------------------------------------------------------
+data:
+  [{execution_count: null, outputs: []}, {execution_count: 2, outputs: [{name: stdout,
+          output_type: stream, text: '/Users/prabhu/src/git/mayavi-workshop/slides/data
+
+            '}]}, {execution_count: null, outputs: []}, {execution_count: 5, outputs: [
+        {name: stdout, output_type: stream, text: "Traceback (most recent call last):\r\
+            \n  File \"/Users/prabhu/src/git/ETS/pyface/build/lib/pyface/ui/qt4/workbench/split_tab_widget.py\"\
+            , line 304, in _focus_changed\r\n    self.focus_changed.emit(old, new)\r\
+            \nTypeError: SplitTabWidget.focus_changed[QWidget, QWidget].emit(): argument\
+            \ 1 has unexpected type 'QObject'\r\n"}]}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}]
