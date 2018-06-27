@@ -1,0 +1,728 @@
+cells:
+
+- markdown: |
+    # The `mayavi2` application
+
+    **Prabhu Ramachandran**
+
+    **Department of Aerospace Engineering, IIT Bombay**
+    <br/>
+
+    **NGCM Summer School,**
+    **Southampton, June 2018**
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - VTK
+    - TVTK
+    - Odds and ends
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - **VTK** $\Longleftarrow$
+    - TVTK
+    - Odds and ends
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## http://www.vtk.org
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Introduction
+
+    * Open source, BSD style license
+
+    * High level library
+
+    * 3D graphics, imaging and visualization
+
+    * Core implemented in C++ for speed
+
+    * Uses OpenGL
+
+    * Wrappers for Python, Tcl and Java
+
+    * Cross platform: Unix, Windows, and MacOS
+
+    * Many developers worldwide
+
+    * Very powerful with lots of features/functionality
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## VTK: history
+
+    * Started in 1993
+
+    * Software to accompany the "VTK book"
+
+    * Very popular with a large developer community
+
+    * Latest version VTK 8.x
+
+    * 6.x broke compatibility with the ``new pipeline''
+
+    * 7.x supports Python 3!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## VTK: an overview
+
+    * Pipeline architecture
+
+    * **Huge** with over 2000 classes
+
+    * Not trivial to learn
+
+    * Need to get the VTK book (which is now free)
+
+    * Reasonable learning curve
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Installation
+
+    * Build from source: requires <http://cmake.org>
+    * Can download binaries
+    * Can now install via `pip`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## VTK / TVTK pipeline
+
+    <center>
+    <img src="MEDIA/m2/vtk_pipeline.png" width="60%" height="80%" />
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Example VTK script
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import vtk
+    # Source object.
+    cone = vtk.vtkConeSource()
+    cone.SetHeight(3.0)
+    cone.SetRadius(1.0)
+    cone.SetResolution(10)
+    # The mapper.
+    coneMapper = vtk.vtkPolyDataMapper()
+    coneMapper.SetInputConnection(cone.GetOutputPort())
+    # The actor.
+    coneActor = vtk.vtkActor()
+    coneActor.SetMapper(coneMapper)
+    # Set it to render in wireframe
+    coneActor.GetProperty().SetRepresentationToWireframe()
+
+
+- markdown: |
+    ## Render window stuff
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Renderwindow stuff
+    ren = vtk.vtkRenderer()
+    ren.AddActor(coneActor)
+    ren.SetBackground(0.2, 0.2, 0.2)
+
+    renWin = vtk.vtkRenderWindow()
+    renWin.AddRenderer(ren)
+    renWin.SetSize(500, 500)
+
+    iren = vtk.vtkRenderWindowInteractor()
+    iren.SetRenderWindow(renWin)
+
+    style = vtk.vtkInteractorStyleTrackballCamera()
+    iren.SetInteractorStyle(style)
+    iren.Initialize()
+
+    # Start interactive interface
+    iren.Start()
+
+
+- markdown: |
+    ## Using `tvtk.tools.ivtk`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %gui qt
+
+
+- code: |
+    from tvtk.tools import ivtk
+    v = ivtk.viewer()
+    v.scene.add_actors(coneActor)
+
+    # This is just to show the view in standalone
+    from mayavi import mlab
+    mlab.show()
+
+
+- markdown: |
+    * Demo of the viewer
+
+    * Pipeline browser is super useful
+
+    * Can turn off browser if not needed
+
+
+- markdown: |
+    ## Sample VTK sources/filters
+
+    * `vtkConeSource`
+    * `vtkXMLStructuredGridReader`
+    * `vtkContourFilter`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## A bigger example
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    r = vtk.vtkXMLUnstructuredGridReader()
+    r.SetFileName('data/fire_ug.vtu')
+
+    c = vtk.vtkContourFilter()
+    c.SetInputConnection(r.GetOutputPort())
+    c.GenerateValues(2, 350, 450)
+
+    m = vtk.vtkPolyDataMapper()
+    m.SetInputConnection(c.GetOutputPort())
+    m.SetScalarRange(0, 500)
+
+    actor = vtk.vtkActor()
+    actor.SetMapper(m)
+
+
+- markdown: |
+    ## Showing it
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from tvtk.tools import ivtk
+    v = ivtk.viewer()
+    v.scene.add_actors(actor)
+
+
+- markdown: |
+    <center>
+    <img src="MEDIA/m2/vtk_example.png"/>
+    <center>
+
+
+- markdown: |
+    ## Python interfaces
+
+    * A lot of nice new functionality in VTK > 6.x
+
+    * `vtk.numpy_interface`
+    * See [NumPy VTK blog](http://blog.kitware.com/improved-vtk-numpy-integration/)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Python UI interfaces
+
+    * Widgets for embedding
+
+    * Qt
+
+    * wxPython
+
+    * GTK
+
+    * Tkinter
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - VTK
+    - **TVTK** $\Longleftarrow$
+    - Odds and ends
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Issues with VTK
+
+    * API is not Pythonic for complex scripts
+    * Native array interface
+    * Using NumPy arrays: non-trivial and inelegant
+    * Native iterator interface
+    * Cannot be pickled
+    * GUI editors need to be "hand-made"
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Introduction to TVTK
+
+    * "Traitified" and Pythonic wrapper atop VTK
+
+    * Elementary pickle support
+
+    * `Get/SetAttribute()` replaced with an `attribute` trait
+
+    * Handles numpy arrays/Python lists transparently
+
+    * Utility modules: pipeline browser, ivtk, mlab
+
+    * Envisage plugins for tvtk scene and pipeline browser
+
+    * BSD license
+
+    * Linux, Win32 and Mac OS
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Example TVTK script
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from tvtk.api import tvtk
+    cone = tvtk.ConeSource(height=3.0, radius=1.0, resolution=10)
+    coneMapper = tvtk.PolyDataMapper(
+        input_connection=cone.output_port
+    )
+    p = tvtk.Property(representation='w')
+    coneActor = tvtk.Actor(mapper=coneMapper, property=p)
+
+
+- markdown: |
+    ## The differences
+
+    |   VTK               |  TVTK     |
+    | ------------------  | --------- |
+    | `import vtk`        | `from tvtk.api import tvtk` |
+    | `vtk.vtkConeSource` | `tvtk.ConeSource`  |
+    | no constructor args | traits set on creation |
+    | `cone.GetHeight()`  | cone.height |
+    | `cone.SetRepresentation()`  | `cone.representation='w'` |
+
+    * `vtk3DWidget`  $ \rightarrow$ `ThreeDWidget`
+    * Method names: `lower_case_with_underscores`
+
+    * VTK class properties (Set/Get pairs or Getters): traits
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## TVTK and traits
+
+    * Attributes may be set on object creation
+
+    * Multiple properties may be set via `trait_set`
+    * Handy access to properties
+
+    * Usual trait features (validation/notification)
+
+    * Visualization via automatic GUI
+
+    * `tvtk`  objects have strict traits
+
+    * `pickle`  and `cPickle`  can be used
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Collections behave like sequences
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    ac = tvtk.ActorCollection()
+    print(len(ac))
+
+
+- code: |
+    ac.append(tvtk.Actor())
+    print(len(ac))
+
+
+- code: |
+    for i in ac:
+        print(i)
+
+
+- code: |
+    ac[-1] = tvtk.Actor()
+    del ac[0]
+    print(len(ac))
+
+
+- markdown: |
+    ## Array handling
+
+    * All `DataArray`  subclasses behave like Pythonic arrays:
+
+    * Can set array using `vtk_array.from_array(numpy_array)`
+    * Can get the array into a NumPy array via `numpy_arr = vtk_array.to_array()`
+    * `Points`  and `IdList` : support these
+
+    * `CellArray`  does not provide a sequence like protocol
+
+    * All methods and properties that accept a `DataArray, Points` etc.
+      transparently accept a NumPy array or a Python list!
+
+    * Most often these use views of the NumPy array!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Array example
+
+    Any method accepting `DataArray` , `Points` , `IdList` or `CellArray`
+    instances can be passed a numpy array or a Python list!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from tvtk.api import tvtk
+    from numpy import array
+    points = array([[0,0,0], [1,0,0], [0,1,0], [0,0,1]], 'f')
+    triangles = array([[0,1,3], [0,3,2], [1,2,3], [0,2,1]])
+    mesh = tvtk.PolyData()
+    mesh.points = points
+    mesh.polys = triangles
+    temperature = array([10, 20 ,20, 30], 'f')
+    mesh.point_data.scalars = temperature
+    import operator # Array's are Pythonic.
+    reduce(operator.add, mesh.point_data.scalars, 0.0)
+
+    pts = tvtk.Points() # Demo of from_array/to_array
+    pts.from_array(points)
+    print(pts.to_array())
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Array example: contrast with VTK
+    ### VTK and arrays
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mesh = vtk.vtkPolyData()
+    # Assume that the points and triangles are set.
+    sc = vtk.vtkFloatArray()
+    sc.SetNumberOfTuples(4)
+    sc.SetNumberOfComponents(1)
+    for i, temp in enumerate(temperatures):
+       sc.SetValue(i, temp)
+
+    mesh.GetPointData().SetScalars(sc)
+
+
+- markdown: |
+
+    Equivalent to (but lot more inefficient than)
+
+    ### TVTK and arrays
+
+
+- code: |
+    mesh.point_data.scalars = temperature
+
+
+- markdown: |
+    ## Some issues with array handling
+
+    * Details of array handling documented in `tvtk` docs
+    * Views and copies: a copy is made of the array in the following
+      cases:
+
+        * Python list is passed
+
+        * Non-contiguous numpy array
+
+        * Method requiring conversion to a `vtkBitArray`
+
+        * Rarely: VTK data array expected and passed numpy array types
+          are different
+
+        * `CellArray` always makes a copy on assignment
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Summary of array issues
+
+    * `DataArray, Points` do not make copies usually
+
+    * Can safely delete references to a numpy array
+
+    * Cannot resize numpy array
+
+    * `CellArray`  makes a copy unless `set_cells`  is used
+
+    * Warning: Resizing the TVTK array reallocates memory: leads to a copy
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Outline
+
+    - VTK
+    - TVTK
+    - **Odds and ends**  $\Longleftarrow$
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Inline IPython support
+    Optional installation:
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    $ jupyter nbextension install --py mayavi --user
+
+
+- markdown: |
+    Usage:
+
+
+- code: |
+    from mayavi import mlab
+    mlab.init_notebook()
+
+
+- code: |
+    s = mlab.test_plot3d()
+    s
+
+
+- markdown: |
+    ## Offscreen rendering
+
+    * Depends on hardware, OS, build
+
+    * Works best on Windows!
+
+    * Basics are easy
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    mlab.options.offscreen = True
+    mlab.test_plot3d()
+    mlab.savefig('/tmp/test.png')
+
+  metadata:
+    slideshow:
+      slide_type: '-'
+
+- markdown: |
+    ## Ray-traced images with Povray
+
+    * Save figure to povray file
+
+    * <http://povray.org>
+    * Install povray and render
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    mlab.test_plot3d()
+    mlab.savefig('test_povray.pov')
+
+
+- code: |
+    !povray +Itest_povray.pov +W1024 +H1024
+
+
+- markdown: |
+    ## Result
+
+    <center>
+    <img src="MEDIA/m2/test_povray.png"/>
+    </center>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Remote-control/network scripting
+
+    * Crude, simple, dangerous
+
+    * Handy though!
+
+    * See `mayavi.tools.server`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    from mayavi.tools import server
+    mlab.test_plot3d()
+    server.serve_tcp()
+
+
+- markdown: |
+    ## Embedding on the web
+
+    * VTK can export X3D files
+
+    * Requires a browser plugin
+
+    * Recent VTK versions can export WebGL which can be embedded
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    from mayavi import mlab
+    s = mlab.test_plot3d()
+    mlab.savefig('test.x3d')
+
+
+- markdown: |
+    ## Future web-related developments
+
+    * <https://github.com/zaherabdulazeez/wizi>
+    * Proof of concept
+
+    * Creates a simple JS viewer for VTK
+
+    * Requires offscreen to work
+
+    * PNGs are sent from server to client on demand
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Thank you!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  livereveal:
+    controls: true
+    help: true
+    scroll: true
+    slideNumber: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
