@@ -65,7 +65,7 @@ cells:
 
 
 - code: |
-    quiver3d(
+    mlab.quiver3d(
         x, y, z, u, v, w,
         scale_factor=0.01,
         mask_points=5
@@ -538,8 +538,7 @@ cells:
 
     u = sin(pi*x) * cos(pi*z)
     v = -2*sin(pi*y) * cos(2*pi*z)
-    w = cos(pi*x)*sin(pi*z) + \
-        cos(pi*y)*sin(2*pi*z)
+    w = cos(pi*x)*sin(pi*z) + cos(pi*y)*sin(2*pi*z)
 
   metadata:
     slideshow:
@@ -554,15 +553,15 @@ cells:
 
 - code: |
     src = mlab.pipeline.vector_field(
-        u, v, w
+        x, y, z, u, v, w
     )
     # ------------------------------------
     mlab.pipeline.vectors(
-        src, mask_points=20, scale_factor=3.
+        src, mask_points=20, scale_factor=0.5
     )
     # ------------------------------------
     mlab.pipeline.vector_cut_plane(
-        src, mask_points=2, scale_factor=3
+        src, mask_points=2, scale_factor=0.5
     )
 
   metadata:
@@ -583,7 +582,7 @@ cells:
     )
     # ------------------------------------
     flow = mlab.flow(
-        u, v, w, seed_scale=1,
+        x, y, z, u, v, w, seed_scale=1,
         seed_resolution=5,
         integration_direction='both'
     )

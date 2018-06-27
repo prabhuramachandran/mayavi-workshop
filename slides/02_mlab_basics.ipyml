@@ -11,7 +11,6 @@ cells:
     **NGCM Summer School,**
     **Southampton, June 2018**
 
-
   metadata:
     slideshow:
       slide_type: slide
@@ -46,7 +45,6 @@ cells:
     * Convenient
 
     * Full-featured
-
 
   metadata:
     slideshow:
@@ -84,14 +82,12 @@ cells:
 
     Make sure you have the following code first
 
-
   metadata:
     slideshow:
       slide_type: slide
 
 - code: |
     %gui qt
-
 
 - markdown: |
 
@@ -114,7 +110,6 @@ cells:
     * Version of Qt?
 
     * Post on slack channel
-
 
   metadata:
     slideshow:
@@ -141,8 +136,9 @@ cells:
 
     Try these
 
+
 - code: |
-    mlab.test_<TAB>
+    mlab.test_
 
 - code: |
     mlab.test_contour3d()
@@ -153,7 +149,6 @@ cells:
 
 - code: |
     mlab.test_contour3d??
-
 
 - markdown: |
     ## Exploring the view
@@ -176,7 +171,6 @@ cells:
     slideshow:
       slide_type: slide
 
-
 - markdown: |
     ## `mlab` plotting functions: 0D data
     <img src="MEDIA/m2/mlab/points3d_ex.png" height="40%" />
@@ -197,7 +191,6 @@ cells:
 - code: |
     mlab.points3d(x, y, z)
 
-
 - markdown: |
     ## Changing how things look
 
@@ -212,6 +205,7 @@ cells:
 
 - markdown: |
     ### IPython is your friend!
+
 
 - code: |
     mlab.points3d?
@@ -275,7 +269,7 @@ cells:
     x, y = 0.2*sin(t), 0.2*cos(t)
     z = 0.1*t
     mlab.plot3d(x, y, z, color=(1, 0, 0))
-    mlab.points3d(x[-1:], y[-1:], z[-1:])
+    mlab.points3d(x[-1], y[-1], z[-1])
 
 - code: |
     mlab.clf()
@@ -291,11 +285,10 @@ cells:
     from numpy import mgrid
 
 - code: |
-    mgrid[0:3,0:3]
+    mgrid[0:3:1, 0:3:1]
 
 - code: |
     mgrid[-1:1:5j]
-
 
 - markdown: |
     ## Example
@@ -329,6 +322,7 @@ cells:
 - markdown: |
     Assumes the points are rectilinear
 
+
 - markdown: |
     ## 2D data: `mlab.contour_surf`
 
@@ -349,6 +343,7 @@ cells:
 - markdown: |
     Assumes the points are rectilinear
 
+
 - markdown: |
     ## 2D data: `mlab.mesh`
 
@@ -360,14 +355,19 @@ cells:
     mlab.clf()
     mlab.mesh(x, y, z)
 
+
+
 - markdown: |
 
     Points need not be regular
 
+
 - code: |
     x, y = mgrid[-3:3:100j,-3:3:100j]
     z = (x*x + y*y)*0.1
+    mlab.clf()
     mlab.mesh(sin(x), cos(y), z)
+
 
   metadata:
     slideshow:
@@ -383,6 +383,8 @@ cells:
 - code: |
     mlab.clf()
     mlab.mesh(sin(x), cos(y), sin(x*y))
+
+
 
 - markdown: |
     ## Exercise
@@ -402,13 +404,13 @@ cells:
       slide_type: slide
 
 - code: |
-    phi, theta = numpy.mgrid[0:pi:20j,
-                            0:2*pi:20j]
+    phi, theta = np.mgrid[0:pi:20j, 0:2*pi:20j]
     x = sin(phi)*cos(theta)
     y = sin(phi)*sin(theta)
     z = cos(phi)
     mlab.clf()
     mlab.mesh(x, y, z, representation='wireframe')
+
 
 
 - markdown: |
@@ -426,9 +428,12 @@ cells:
     t = [[0, 1, 2]]
 
 - code: |
+    points = np.array([[0., 0, 0], [1, 0, 0], [1, 1, 0]])
+    x, y, z = points.T
+
+- code: |
     mlab.clf()
     mlab.triangular_mesh(x, y, z, t)
-
 
 - markdown: |
     Explicitly specify the triangles
@@ -438,7 +443,6 @@ cells:
     ## Exercise
 
     Create a simple pyramid composed of triangles and plot it.
-
 
   metadata:
     slideshow:
@@ -457,10 +461,13 @@ cells:
     z = [0., 0, 0, 0, 1]
     t = [[0, 1, 4], [1, 2, 4],
          [2, 3, 4], [3, 0, 4]]
+
     mlab.clf()
     mlab.triangular_mesh(
-        x, y, z, t, scalars=z
+        x, y, z, t
     )
+
+
 
 - markdown: |
     ## 2D data: `mlab.imshow`
@@ -471,11 +478,15 @@ cells:
 
 - code: |
     s = np.random.random((2<<12, 2<<12))
-    s.size
+    s.shape
+
+
 
 - code: |
     mlab.clf()
     mlab.imshow(s)
+
+
 
 - markdown: |
     Do not try this with `matplotlib`!
@@ -495,6 +506,8 @@ cells:
     mlab.clf()
     mlab.contour3d(x*x*0.5 + y*y + z*z*2)
 
+
+
 - markdown: |
     ## 3D vector data: `mlab.quiver3d`
 
@@ -505,10 +518,15 @@ cells:
       slide_type: slide
 
 - code: |
+    mlab.clf()
     mlab.test_quiver3d()
 
+
+
 - code: |
-    o = mlab.quiver3d(x, y, z, u, v, w)
+    #o = mlab.quiver3d(x, y, z, u, v, w)
+    o = mlab.quiver3d(1, 1, 1, 0, 5, 5)
+
 
 
 - markdown: |
@@ -519,13 +537,15 @@ cells:
       slide_type: slide
 
 - code: |
-    x, y, z = mgrid[-2:3, -2:3, -2:3]
+    x, y, z = mgrid[-2:3:10j, -2:3:10j, -2:3:10j]
     r = sqrt(x**2 + y**2 + z**4)
     u = y*sin(r)/(r+0.001)
     v = -x*sin(r)/(r+0.001)
-    w = zeros_like(z)
+    w = ones_like(z)*0.1
+    mlab.clf()
     obj = mlab.flow(x, y, z, u, v, w,
                     seedtype='plane')
+
 
 
 - markdown: |
@@ -543,6 +563,10 @@ cells:
     slideshow:
       slide_type: slide
 
+- code: |
+    x, y, z = mgrid[-50:50:20j, -50:50:20j, -10:60:20j]
+
+
 - markdown: |
     ## Exercise
 
@@ -555,9 +579,12 @@ cells:
 - code: |
     x, y, z = mgrid[-50:50:20j, -50:50:20j, -10:60:20j]
 
+
+
 - markdown: |
     * Hint: use `mlab.quiver3d`
     * Explore arguments to make the visualization better
+
 
 - markdown: |
     ## Solution
@@ -573,9 +600,13 @@ cells:
         w = x*y - b*z
         return u, v, w
 
+
+
 - code: |
     x, y, z = mgrid[-50:50:20j,-50:50:20j, -10:60:20j]
     u, v, w = lorenz(x, y, z)
+
+
 
 - code: |
     mlab.clf()
@@ -583,12 +614,13 @@ cells:
                   scale_factor=0.01,
                   mask_points=5)
 
+
+
 - markdown: |
     ## Another exercise
 
     * Try the same with `mlab.flow`
     * Use the UI to configure things
-
 
   metadata:
     slideshow:
@@ -603,6 +635,8 @@ cells:
 
 - code: |
     mlab.flow(x, y, z, u, v, w)
+
+
 
 - markdown: |
     ## Digression exercise
@@ -625,15 +659,20 @@ cells:
         x, y, z = state
         return np.array(lorenz(x, y, z))
 
+
+
 - code: |
     t = np.linspace(0., 50., 2000)
     r = odeint(
         lorenz_ode, (10., 50., 50.), t
     )
 
+
+
 - code: |
     x, y, z = r[:,0], r[:,1], r[:,2]
     mlab.plot3d(x, y, z, t, tube_radius=None)
+
 
 
 - markdown: |
@@ -643,7 +682,6 @@ cells:
 
     * Tweak parameters: `mask_points, scale_factor`
     * Explore parameters on UI
-
 
     * `mlab.flow`  is a lot better!
 
@@ -657,7 +695,6 @@ cells:
     ## Other utility functions
 
     * `gcf` : get current figure
-
 
   metadata:
     slideshow:
@@ -699,7 +736,6 @@ cells:
 
     * `show` : Standalone mlab scripts
 
-
   metadata:
     slideshow:
       slide_type: fragment
@@ -719,7 +755,6 @@ cells:
     * `view, roll, yaw, move`
     * Others, see UG
 
-
   metadata:
     slideshow:
       slide_type: slide
@@ -733,10 +768,8 @@ cells:
 
 - code: |
     print(mlab.view())
-    mlab.view(azimuth=None,
-              elevation=None,
-              distance=None,
-              focalpoint=None)
+    mlab.view(azimuth=60, elevation=90, distance=100, focalpoint=None)
+
 
 - markdown: |
     ## Exercise
@@ -750,12 +783,24 @@ cells:
     slideshow:
       slide_type: slide
 
-
 # The lines below here may be deleted if you do not need them.
 # ---------------------------------------------------------------------------
 metadata:
   celltoolbar: Slideshow
-  language: python
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
   livereveal:
     controls: true
     help: true

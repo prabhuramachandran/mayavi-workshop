@@ -35,6 +35,7 @@ cells:
 - code: |
     %gui qt
 
+
   metadata:
     slideshow:
       slide_type: slide
@@ -42,6 +43,7 @@ cells:
 - code: |
     import numpy as np
     from mayavi import mlab
+
 
 - markdown: |
     ## Animation
@@ -63,10 +65,12 @@ cells:
       slide_type: slide
 
 - code: |
+    mlab.clf()
     x, y = np.mgrid[0:3:1,0:3:1]
     s = mlab.surf(x, y, x*0.1)
     for i in range(10):
         s.mlab_source.scalars = x*0.1*(i+1)
+
 
 - markdown: |
     ## Animation: `mlab_source.set`
@@ -94,18 +98,20 @@ cells:
 
 - code: |
     mlab.clf()
-    x, y = mgrid[0:3:1,0:3:1]
+    x, y = np.mgrid[0:3:1,0:3:1]
     s = mlab.surf(x, y, x*0.1, representation='wireframe')
 
     fig = mlab.gcf()
 
+
 - code: |
     for i in range(5):
       sl = slice(0, 3, 1.0/(i+2))
-      x, y = mgrid[sl, sl]
+      x, y = np.mgrid[sl, sl]
       sc = x*x*0.05*(i+1)
       s.mlab_source.reset(x=x, y=y, scalars=sc)
       fig.scene.reset_zoom()
+
 
 - markdown: |
     ## `set` vs `reset`
@@ -140,7 +146,6 @@ cells:
 
     * Introduce the `yield` keyword
 
-
   metadata:
     slideshow:
       slide_type: slide
@@ -160,10 +165,10 @@ cells:
             count += 1
 
 - code: |
-    c = counter(2)
-    next(c)
+    counter(2)
 
 - code: |
+    c = counter(2)
     next(c)
 
 - code: |
@@ -181,8 +186,10 @@ cells:
     for i in counter(4):
         print(i)
 
+
 - code: |
     [i*i for i in counter(4)]
+
 
 - markdown: |
     As an analogy see this:
@@ -195,8 +202,10 @@ cells:
     for line in open('my_file.txt'):
         print(line)
 
+
 - markdown: |
     Allows one to iterate over a file.
+
 
 - markdown: |
     ## Python Aside: Generators Recap
@@ -236,10 +245,12 @@ cells:
     def deco(func):
         return func
 
+
 - code: |
     @deco
     def greet():
         print("Hola!")
+
 
 - code: |
     # @deco is equivalent to:
@@ -262,10 +273,12 @@ cells:
             func(*args, **kw)
         return new_func
 
+
 - code: |
     @deco
     def greet():
         print("Hola!")
+
 
 - code: |
     greet()
@@ -307,7 +320,6 @@ cells:
     * `mlab.animate`
     * Useful when interactivity is desired
 
-
   metadata:
     slideshow:
       slide_type: slide
@@ -321,6 +333,7 @@ cells:
             s.mlab_source.set(
                 scalars = x*0.1*(i+1))
             yield
+
 
 - code: |
     a = anim()
@@ -351,6 +364,7 @@ cells:
                 scalars = x*0.1*(i+1))
             yield
 
+
 - markdown: |
     ## Exercise
 
@@ -366,6 +380,7 @@ cells:
     z = sin(x*x + y*y)
     s = mlab.surf(x, y, z)
 
+
 - markdown: |
     ## Solution
 
@@ -375,6 +390,7 @@ cells:
 
 - code: |
     # Your solution here!
+
 
 - markdown: |
     ## Automatic movie recording
@@ -388,10 +404,14 @@ cells:
       slide_type: slide
 
 - code: |
-    from mayavi import mlab
     f = mlab.figure()
     f.scene.movie_maker.record = True
     mlab.test_mesh_sphere_anim()
+
+
+- code: |
+
+
 
 - markdown: |
     ## Recap
@@ -403,7 +423,6 @@ cells:
     * Using `mlab`
     * Animating data
 
-
   metadata:
     slideshow:
       slide_type: slide
@@ -413,7 +432,6 @@ cells:
 
      Yes!
 
-
   metadata:
     slideshow:
       slide_type: slide
@@ -422,7 +440,20 @@ cells:
 # ---------------------------------------------------------------------------
 metadata:
   celltoolbar: Slideshow
-  language: python
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
   livereveal:
     controls: true
     help: true
