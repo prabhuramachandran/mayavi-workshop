@@ -804,7 +804,8 @@ cells:
     from mayavi import mlab
 
 - code: |
-    mlab.pipeline.open(filename)
+    mlab.pipeline.open('data/room_vis.wrl')
+    mlab.pipeline.open('data/fire_ug.vtu')
 
 - markdown: |
     ## Notes
@@ -897,8 +898,8 @@ cells:
 
 - code: |
     # Transpose array data due to VTK's implicit ordering.
-    # Flatten it so the number of components is 1.
-    spoints.point_data.scalars = z.T.flatten()
+    # ravel it so the number of components is 1.
+    spoints.point_data.scalars = z.T.ravel()
     spoints.point_data.scalars.name = 'scalar'
 
   metadata:
@@ -913,6 +914,7 @@ cells:
       slide_type: slide
 
 - code: |
+    mlab.clf()
     # Add the dataset to the pipeline
     src = mlab.pipeline.add_dataset(spoints)
 
@@ -935,7 +937,7 @@ cells:
     x, y, z = np.ogrid[-5:5:128j,-5:5:128j,
                        -5:5:128j]
     x, y, z = [t.astype('f') for t in (x, y, z)]
-    scalars = bp.sin(x*y*z)/(x*y*z)
+    scalars = np.sin(x*y*z)/(x*y*z)
 
 - code: |
     spoints = tvtk.StructuredPoints(
@@ -948,7 +950,7 @@ cells:
     # The copy makes the data contiguous and the transpose
     # makes it suitable for display via tvtk.
     s = scalars.transpose().copy()
-    spoints.point_data.scalars = ravel(s)
+    spoints.point_data.scalars = s.ravel()
     spoints.point_data.scalars.name = 'scalars'
 
 - markdown: |
@@ -959,6 +961,7 @@ cells:
       slide_type: slide
 
 - code: |
+    mlab.clf()
     # Add the dataset to the pipeline
     src = mlab.pipeline.add_dataset(spoints)
 
@@ -1010,6 +1013,7 @@ cells:
       slide_type: slide
 
 - code: |
+    mlab.clf()
     # Add the dataset to the pipeline
     src = mlab.pipeline.add_dataset(sgrid)
 
@@ -1034,9 +1038,9 @@ cells:
 
 - code: |
     # The points in 3D.
-    points = array([[0.,0,0], [1,0,0], [0,1,0], [0,0,1]])
+    points = np.array([[0.,0,0], [1,0,0], [0,1,0], [0,0,1]])
     # Connectivity via indices to the points.
-    triangles = array([[0,1,3], [0,3,2], [1,2,3], [0,2,1]])
+    triangles = np.array([[0,1,3], [0,3,2], [1,2,3], [0,2,1]])
     # Creating the data object.
 
 - code: |
@@ -1051,13 +1055,13 @@ cells:
 
 - code: |
     # Now create some point data.
-    temperature = array([10., 20. ,30., 40.], 'f')
+    temperature = np.array([10., 20. ,30., 40.], 'f')
     mesh.point_data.scalars = temperature
     mesh.point_data.scalars.name = 'temperature'
 
 - code: |
     # Some vectors.
-    velocity = array([[0.,0.,0], [1.,0,0], [0.,1,0], [0.,0,1]])
+    velocity = np.array([[0.,0.,0], [1.,0,0], [0.,1,0], [0.,0,1]])
     mesh.point_data.vectors = velocity
     mesh.point_data.vectors.name = 'velocity'
 
@@ -1069,7 +1073,7 @@ cells:
       slide_type: slide
 
 - code: |
-    # Add the dataset to the pipeline
+    mlab.clf()
     src = mlab.pipeline.add_dataset(mesh)
 
     surf = mlab.pipeline.surface(src)
@@ -1088,8 +1092,8 @@ cells:
       slide_type: slide
 
 - code: |
-    points = array([[0.,0.,0], [1.,0,0], [0.,1,0], [0.,0,1]])
-    tets = array([[0, 1, 2, 3]])
+    points = np.array([[0.,0.,0], [1.,0,0], [0.,1,0], [0.,0,1]])
+    tets = np.array([[0, 1, 2, 3]])
     tet_type = tvtk.Tetra().cell_type # VTK_TETRA == 10
 
 - code: |
@@ -1099,11 +1103,11 @@ cells:
 
 - code: |
     # Attribute data.
-    temperature = array([10, 20 ,20, 30], 'f')
+    temperature = np.array([10, 20 ,20, 30], 'f')
     ug.point_data.scalars = temperature
     ug.point_data.scalars.name = 'temperature'
     # Some vectors.
-    velocity = array([[0.,0,0], [1,0,0], [0,1,0], [0,0,1]])
+    velocity = np.array([[0.,0,0], [1,0,0], [0,1,0], [0,0,1]])
     ug.point_data.vectors = velocity
     ug.point_data.vectors.name = 'velocity'
 
@@ -1115,6 +1119,7 @@ cells:
       slide_type: slide
 
 - code: |
+    mlab.clf()
     # Add the dataset to the pipeline
     src = mlab.pipeline.add_dataset(ug)
 

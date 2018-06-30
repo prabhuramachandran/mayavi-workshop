@@ -387,8 +387,9 @@ cells:
       slide_type: slide
 
 - code: |
+    import numpy as np
     sl = slice(-5, 5, 64j)
-    x, y, z = mgrid[sl,sl,sl]
+    x, y, z = np.mgrid[sl,sl,sl]
     scalar = np.sin(np.sqrt(x*x*0.5 + y*y + z*z*2))
 
   id: 6
@@ -407,6 +408,9 @@ cells:
   metadata:
     slideshow:
       slide_type: slide
+
+- code: |
+    %gui qt
 
 - code: |
     from mayavi import mlab
