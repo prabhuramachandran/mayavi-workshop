@@ -13,6 +13,8 @@ notebooks in the form of
 [ipyaml](https://github.com/prabhuramachandran/ipyaml) documents which can be
 easily converted into Jupyter notebooks.
 
+The source, PDF, and Jupyter notebooks are in the [slides directory](https://github.com/prabhuramachandran/mayavi-workshop/tree/master/slides).
+
 
 # Installation of Mayavi
 
