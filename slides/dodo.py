@@ -26,7 +26,7 @@ def task_notebook():
             'actions': [
                 'ipyaml --no-output {src} {dest}'.format(src=fname, dest=dest)
             ],
-            'file_dep': ['common.tex', fname],
+            'file_dep': [fname],
             'targets': [dest],
             'clean': True,
         }
