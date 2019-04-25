@@ -9,8 +9,8 @@ written for 3.5 or 3.6.
 
 [Mayavi](https://github.com/enthought/mayavi) requires numpy and
 [VTK](https://www.vtk.org) to be installed. It also requires a suitable GUI
-toolkit. We recommend that you install PyQt5 as that is what works best with
-Mayavi under Python 3.x.
+toolkit. We recommend that you install PyQt5 or PySide2 as that is what works
+best with Mayavi under Python 3.x.
 
 We provide specific instructions for different packaging environments below.
 
@@ -20,9 +20,6 @@ If you are not using any particular packaging environment you can easily
 install Mayavi using pip. This does require that you are able to compile
 extensions on your installation. This is usually the case on MacOS and Linux.
 
-On Windows you will need to install the required compilers. Information is
-available here: https://wiki.python.org/moin/WindowsCompilers and you likely
-need to have Microsoft Visual C++ 14.0 standalone installed.
 
 Given this you can install Mayavi with the following:
 ```
@@ -31,10 +28,16 @@ Given this you can install Mayavi with the following:
   $ pip install mayavi
 ```
 
+If for some reason pyqt5 gives you problems, you can also try the following:
+
+```
+  $ pip install pyside2
+```
+
 We also require jupyter and scipy for the workshop so please also install the following:
 
 ```
-  $ pip install scipy jupyter
+  $ pip install scipy jupyter ipywidgets ipyevents
 ```
 
 If this works successfully, please move on to the "testing your installation" below.
