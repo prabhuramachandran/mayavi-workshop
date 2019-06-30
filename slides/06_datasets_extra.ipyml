@@ -11,7 +11,7 @@ cells:
 
     **NGCM Summer School,**
 
-    **Southampton, June 2018**
+    **Southampton, UK**
 
   metadata:
     slideshow:
@@ -121,6 +121,9 @@ cells:
   metadata:
     slideshow:
       slide_type: slide
+
+- code: |
+    # Your code here!
 
 
 
