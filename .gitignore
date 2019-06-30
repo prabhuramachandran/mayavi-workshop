@@ -12,6 +12,7 @@
 *.zip
 *.gz
 *.doit.db
+*.doit.db.db
 *~
 **/auto
 **/.ipynb_checkpoints

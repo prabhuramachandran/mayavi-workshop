@@ -7,8 +7,8 @@ the
 in 2016. The course was again conducted in 2017. The material was in the form
 of slides made using LaTeX and some Jupyter notebooks.
 
-In 2018 the material is being revamped and converted to
-[Jupyter notebooks](http://jupyter.org/). The older material is converted into
+In 2018 the material was revamped and converted to [Jupyter
+notebooks](http://jupyter.org/). The older material is converted into
 notebooks in the form of
 [ipyaml](https://github.com/prabhuramachandran/ipyaml) documents which can be
 easily converted into Jupyter notebooks.
