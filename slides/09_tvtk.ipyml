@@ -1,15 +1,12 @@
 cells:
 
 - markdown: |
-    # The `mayavi2` application
+    # VTK, TVTK, and odds and ends
 
     **Prabhu Ramachandran**
 
     **Department of Aerospace Engineering, IIT Bombay**
     <br/>
-
-    **NGCM Summer School,**
-    **Southampton, June 2018**
 
   metadata:
     slideshow:
@@ -82,7 +79,7 @@ cells:
 
     * 6.x broke compatibility with the ``new pipeline''
 
-    * 7.x supports Python 3!
+    * > 7.x supports Python 3!
 
   metadata:
     slideshow:
@@ -557,7 +554,40 @@ cells:
 
 - markdown: |
     ## Inline IPython support
-    Optional installation:
+
+    - Three different backends:
+
+      - `'ipy'`: the default, needs `ipywidgets` and `ipyevents`
+      - `'x3d'`: embeds X3D in the notebook, requires WebGL support.
+      - `'png'`: only embeds a PNG, non interactive.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Inline IPython support: ipywidgets backend
+
+    - Needs VTK to produce correct offscreen images
+    - Fully interactive
+    - Supports complete UI interaction
+    - Will work remotely also but needs kernel
+    - Does not need WebGL in browser
+    - Only in latest release, or master
+    - `pip install ipywidgets ipyevents`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Inline IPython support: x3d backend
+
+    - Embeds X3D in browser
+    - Needs WebGL support in browser
+    - Extra installation needed to work offline
+    - Somewhat interactive, does not need server
+    - Cannot interact with widgets
 
   metadata:
     slideshow:
@@ -565,28 +595,20 @@ cells:
 
 - code: |
     $ jupyter nbextension install --py mayavi --user
+    $ jupyter nbextension enable --py mayavi --user
 
 
 - markdown: |
-    Usage:
+    ## Demo
 
+    Usage in demo notebook, `notebooks/mayavi_jupyter.ipynb`
 
-- code: |
-    from mayavi import mlab
-    mlab.init_notebook()
-
-
-- code: |
-    s = mlab.test_plot3d()
-    s
 
 
 - markdown: |
     ## Offscreen rendering
 
     * Depends on hardware, OS, build
-
-    * Works best on Windows!
 
     * Basics are easy
 
@@ -637,61 +659,6 @@ cells:
     slideshow:
       slide_type: slide
 
-
-- markdown: |
-    ## Remote-control/network scripting
-
-    * Crude, simple, dangerous
-
-    * Handy though!
-
-    * See `mayavi.tools.server`
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- code: |
-    from mayavi import mlab
-    from mayavi.tools import server
-    mlab.test_plot3d()
-    server.serve_tcp()
-
-
-- markdown: |
-    ## Embedding on the web
-
-    * VTK can export X3D files
-
-    * Requires a browser plugin
-
-    * Recent VTK versions can export WebGL which can be embedded
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- code: |
-    from mayavi import mlab
-    s = mlab.test_plot3d()
-    mlab.savefig('test.x3d')
-
-
-- markdown: |
-    ## Future web-related developments
-
-    * <https://github.com/zaherabdulazeez/wizi>
-    * Proof of concept
-
-    * Creates a simple JS viewer for VTK
-
-    * Requires offscreen to work
-
-    * PNGs are sent from server to client on demand
-
-  metadata:
-    slideshow:
-      slide_type: slide
 
 - markdown: |
     ## Thank you!
