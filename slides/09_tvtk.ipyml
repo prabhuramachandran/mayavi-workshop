@@ -77,9 +77,9 @@ cells:
 
     * Latest version VTK 8.x
 
-    * 6.x broke compatibility with the ``new pipeline''
+    * 6.x broke compatibility with the "new pipeline"
 
-    * > 7.x supports Python 3!
+    * 7.x and above supports Python 3!
 
   metadata:
     slideshow:

@@ -2,12 +2,12 @@ cells:
 
 - markdown: |
     # The `mayavi2` application
-
+    
     **Prabhu Ramachandran**
-
+    
     **Department of Aerospace Engineering, IIT Bombay**
     <br/>
-
+    
     **NGCM Summer School,**
     **Southampton, UK**
 
@@ -17,7 +17,7 @@ cells:
 
 - markdown: |
     ## Outline
-
+    
     - Overview
     - UI features
     - Command line arguments
@@ -30,13 +30,13 @@ cells:
 
 - markdown: |
     ## Introduction
-
+    
     * Visualization without scripting
-
+    
     * Especially useful with data files
-
+    
     * Can be scripted
-
+    
     * Supports `mlab`
 
   metadata:
@@ -52,7 +52,7 @@ cells:
 
 - markdown: |
     ## Features
-
+    
     * Complete UI
     * Powerful command line options
     * Embedded Python
@@ -76,13 +76,13 @@ cells:
 
 - markdown: |
     ## Demo of UI features
-
+    
     * Basic UI
-
+    
     * Python shell integration
-
+    
     * Time-series support
-
+    
     * Script recording
 
   metadata:
@@ -104,25 +104,25 @@ cells:
 
 - markdown: |
     * `-d datafile.ext` : Load data file
-
+    
     * `-f FilterName` : Load filter
-
+    
     * `-m ModuleName` : Load module
-
+    
     * `-s python-string` : Evaluate Python expression
-
+    
     * `-x file.py` : Execute Python code
 
 
 - markdown: |
     ## Advanced options
-
+    
     * `-n` : new scene
-
+    
     * `-M` : new module manager
-
+    
     * `-o` : offscreen mode
-
+    
     * `-z filename` : load saved visualization
 
   metadata:
@@ -148,13 +148,13 @@ cells:
 
 - markdown: |
     ## Scripting from the command line
-
+    
     * `-s python-code`  is very powerful
-
+    
     * Takes Python expressions
-
+    
     * Applies to the last module/filter
-
+    
     * Can be called multiple times
 
   metadata:
@@ -191,18 +191,18 @@ cells:
 
 - markdown: |
     ## Exercise
-
+    
     * Visualize the `fire_ug.vtu`  dataset along with the
       `room_vis.wrl`  file
-
+    
     * Use one scalar cut plane with its normal along the y axis
-
+    
     * Add an iso-contour with the temperature set to 400.
-
+    
     * Do all these from the command line
-
+    
     * Hint: use the embedded Python shell in the app
-
+    
     * Hint: use script recording
 
   metadata:
@@ -235,9 +235,9 @@ cells:
 
 - markdown: |
     ## Using `mlab`
-
+    
     * Can import and use mlab
-
+    
     * Opening data: `mlab.pipeline.open`
     * Add dataset: `mlab.pipeline.add_dataset`
     * Use `lower_case_with_underscores`
@@ -246,7 +246,6 @@ cells:
   metadata:
     slideshow:
       slide_type: slide
-
 
 # The lines below here may be deleted if you do not need them.
 # ---------------------------------------------------------------------------
@@ -277,15 +276,6 @@ nbformat_minor: 2
 
 # ---------------------------------------------------------------------------
 data:
-  [{execution_count: null, outputs: []}, {execution_count: 2, outputs: [{name: stdout,
-          output_type: stream, text: '/Users/prabhu/src/git/mayavi-workshop/slides/data
-
-            '}]}, {execution_count: null, outputs: []}, {execution_count: 5, outputs: [
-        {name: stdout, output_type: stream, text: "Traceback (most recent call last):\r\
-            \n  File \"/Users/prabhu/src/git/ETS/pyface/build/lib/pyface/ui/qt4/workbench/split_tab_widget.py\"\
-            , line 304, in _focus_changed\r\n    self.focus_changed.emit(old, new)\r\
-            \nTypeError: SplitTabWidget.focus_changed[QWidget, QWidget].emit(): argument\
-            \ 1 has unexpected type 'QObject'\r\n"}]}, {execution_count: null, outputs: []},
-    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+  [{execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
       outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
-    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}]
+    {execution_count: null, outputs: []}]

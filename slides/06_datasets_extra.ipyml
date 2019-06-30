@@ -2,15 +2,15 @@ cells:
 
 - markdown: |
     # VTK/Mayavi Datasets and Filters
-
+    
     **Prabhu Ramachandran**
-
+    
     **Department of Aerospace Engineering, IIT Bombay**
-
+    
     <br/>
-
+    
     **NGCM Summer School,**
-
+    
     **Southampton, UK**
 
   metadata:
@@ -19,7 +19,7 @@ cells:
 
 - markdown: |
     ## Illustration of how to view unstructured points
-
+    
     Let us say you have a random collection of points and scalars associated
     with them but DO NOT know the topology. What do you do?
 
@@ -34,6 +34,8 @@ cells:
     s = x*x + y*y
     z = np.ones_like(x)
 
+  id: 0
+
 - markdown: |
     ## Let's visualize it!
 
@@ -46,19 +48,29 @@ cells:
     from mayavi import mlab
     from tvtk.api import tvtk
 
+  id: 1
+
 - code: |
     # If you want a different background!
     fig = mlab.figure(bgcolor=(1,1,1), fgcolor=(0,0,0))
 
+  id: 2
+
 - code: |
     src = mlab.pipeline.scalar_scatter(x, y, z, s)
+
+  id: 3
 
 - code: |
     ug = mlab.pipeline.delaunay2d(src)
 
+  id: 4
+
 - code: |
     surf = mlab.pipeline.surface(ug)
     surf.actor.property.edge_visibility = True
+
+  id: 5
 
 - markdown: |
     ## A low-level way to create the points
@@ -81,6 +93,7 @@ cells:
     mlab.clf()
     src = mlab.pipeline.add_dataset(mesh)
 
+  id: 6
 
 - markdown: |
     ### Example in 3D
@@ -97,10 +110,12 @@ cells:
     s = x*x + y*y + z*z
     mlab.clf()
 
+  id: 7
 
 - code: |
     src = mlab.pipeline.scalar_scatter(x, y, z, s)
 
+  id: 8
   metadata:
     slideshow:
       slide_type: slide
@@ -109,14 +124,14 @@ cells:
     ug = mlab.pipeline.delaunay3d(src)
     iso = mlab.pipeline.iso_surface(ug, contours=8)
 
+  id: 9
 
 - markdown: |
     ## Exercise
-
+    
     Modify the above 3D example to construct the points in all quadrants, the
     current set of points only lie in the first quadrant since $0 < x,y,z <
     1$.
-
 
   metadata:
     slideshow:
@@ -125,24 +140,32 @@ cells:
 - code: |
     # Your code here!
 
-
+  id: 10
 
 # The lines below here may be deleted if you do not need them.
 # ---------------------------------------------------------------------------
 metadata:
   kernelspec:
-    display_name: Python 2
+    display_name: Python 3
     language: python
-    name: python2
+    name: python3
   language_info:
     codemirror_mode:
       name: ipython
-      version: 2
+      version: 3
     file_extension: .py
     mimetype: text/x-python
     name: python
     nbconvert_exporter: python
-    pygments_lexer: ipython2
-    version: 2.7.11
+    pygments_lexer: ipython3
+    version: 3.6.0
 nbformat: 4
 nbformat_minor: 2
+
+# ---------------------------------------------------------------------------
+data:
+  [{execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}]

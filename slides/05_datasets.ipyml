@@ -79,7 +79,7 @@ cells:
 - markdown: |
     ## Dimensionality example
 
-    |<img src="MEDIA/m2/datasets/points.png"/ width="60%" height="60%"/> | <img src="MEDIA/m2/datasets/wireframe.png" width="60%" height="60%"/> |
+    |<img src="MEDIA/m2/datasets/points.png" width="60%" height="60%"/> | <img src="MEDIA/m2/datasets/wireframe.png" width="60%" height="60%"/> |
     | ---------------- | --------------|
     | Points           |  Wireframe    |
     | <img src="MEDIA/m2/datasets/surface.png" width="60%" height="60%" />| |
