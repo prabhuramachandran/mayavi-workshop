@@ -11,7 +11,7 @@ cells:
 
     **NGCM Summer School,**
 
-    **Southampton, June 2018**
+    **Southampton, July 2019**
 
   metadata:
     slideshow:
@@ -24,7 +24,7 @@ cells:
     - Using `mlab`
        - The basics
        - Animation
-    - **Going deeper**
+    - **Going deeper**  $\Longleftarrow$
        - The pipeline
        - Data sources
 
@@ -236,6 +236,19 @@ cells:
     o.remove()
     mlab.pipeline.grid_plane(p)
 
+- markdown: |
+    ## A useful trick
+
+    - If you want to quickly configure parameters for a particular object
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    p.edit_traits()
+    # Will pop up a UI for `p` alone!
+
 
 - markdown: |
     ## Recap
@@ -246,6 +259,7 @@ cells:
 
     * `obj.remove()`
     * `mlab.pipeline`  lets us do more
+    * `obj.edit_traits()`: UI for `obj`
 
     * Right-click-menu equivalents are in `mlab.pipeline`
 
@@ -288,9 +302,6 @@ cells:
 
 - markdown: |
     Hide vectors, add a Vector Cut Plane
-
-    <br/>
-    Can also use the Lorenz example, try it!
 
 
 - markdown: |
@@ -487,7 +498,7 @@ cells:
       slide_type: slide
 
 - markdown: |
-    ## Exercise
+    ## Exercise (Homework?)
 
     * Run all the `mlab.test_*`  functions
 
@@ -540,12 +551,8 @@ cells:
     v = -2*sin(pi*y) * cos(2*pi*z)
     w = cos(pi*x)*sin(pi*z) + cos(pi*y)*sin(2*pi*z)
 
-  metadata:
-    slideshow:
-      slide_type: '-'
-
 - markdown: |
-    ## Hints
+    ## Hints / Solution
 
   metadata:
     slideshow:
@@ -564,12 +571,8 @@ cells:
         src, mask_points=2, scale_factor=0.5
     )
 
-  metadata:
-    slideshow:
-      slide_type: '-'
-
 - markdown: |
-    ## Hints
+    ## Hints / Solution
 
   metadata:
     slideshow:
@@ -587,10 +590,6 @@ cells:
         integration_direction='both'
     )
 
-  metadata:
-    slideshow:
-      slide_type: '-'
-
 - markdown: |
     ## Exercise: play with your own data
 
@@ -601,7 +600,7 @@ cells:
       slide_type: slide
 
 - markdown: |
-    ## Exercise
+    ## Exercise (if you don't have your own data)
 
     1. Start with flow for the Lorenz system
     1. Now extract the vector norm (use a filter)

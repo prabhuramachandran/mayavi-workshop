@@ -11,7 +11,7 @@ cells:
 
     **NGCM Summer School,**
 
-    **Southampton, June 2018**
+    **Southampton, July 2019**
 
   metadata:
     slideshow:
@@ -23,7 +23,7 @@ cells:
     - Getting started with `mlab`
     - Using `mlab`
        - The basics
-       - **Animation**
+       - **Animation** $\Longleftarrow$
     - Going deeper
        - The pipeline
        - Data sources
@@ -34,7 +34,6 @@ cells:
 
 - code: |
     %gui qt
-
 
   metadata:
     slideshow:
@@ -71,6 +70,48 @@ cells:
     for i in range(10):
         s.mlab_source.scalars = x*0.1*(i+1)
 
+- markdown: |
+    ## But did it really animate??
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import time
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+        time.sleep(0.1)
+
+- code: |
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+        mlab.savefig('/tmp/anim_%02d.png' % i)
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    mlab.clf()
+    x, y = np.mgrid[0:3:1,0:3:1]
+    s = mlab.surf(x, y, x*0.1)
+    for i in range(10):
+        s.mlab_source.scalars = x*0.1*(i+1)
+        mlab.process_ui_events()
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
 
 - markdown: |
     ## Animation: `mlab_source.set`
@@ -85,6 +126,8 @@ cells:
         s.mlab_source.set(
             scalars=x*0.1*(i+1), y=y+i*0.5
         )
+        mlab.process_ui_events()
+        time.sleep(0.1)
 
 
 - markdown: |
@@ -313,6 +356,16 @@ cells:
             return r
         return new_func
 
+- markdown: |
+    ## Finding the traits you can change
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    s.mlab_source.print_traits()
+
 
 - markdown: |
     ## Animate decorator
@@ -369,17 +422,16 @@ cells:
     ## Exercise
 
     Create a stack of images animating the example below such that it looks
-    like the wave is traveling.
+    like the wave is moving.
 
   metadata:
     slideshow:
       slide_type: slide
 
 - code: |
-    x, y = mgrid[-3:3:100j,-3:3:100j]
-    z = sin(x*x + y*y)
+    x, y = np.mgrid[-3:3:100j,-3:3:100j]
+    z = np.sin(x*x + y*y)
     s = mlab.surf(x, y, z)
-
 
 - markdown: |
     ## Solution
@@ -390,6 +442,9 @@ cells:
 
 - code: |
     # Your solution here!
+
+- code: |
+    %load solutions/03_wave_anim.py
 
 
 - markdown: |
@@ -428,9 +483,9 @@ cells:
       slide_type: slide
 
 - markdown: |
-    ## Can we do more?
+    ## What next?
 
-     Yes!
+    - Going deeper!
 
   metadata:
     slideshow:
