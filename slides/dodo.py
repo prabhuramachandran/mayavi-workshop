@@ -18,7 +18,7 @@ def task_pdf():
 
 
 def task_notebook():
-    for fname in glob.glob('*.ipyml'):
+    for fname in glob.glob('*.ipyml') + glob.glob('notebooks/*.ipyml'):
         name = os.path.splitext(fname)[0]
         dest = name + '.ipynb'
         yield {

@@ -1,7 +1,7 @@
 cells:
 
 - markdown: |
-    # VTK/Mayavi Datasets Primer
+    # VTK/Mayavi: Datasets Primer
 
     **Prabhu Ramachandran**
 
@@ -11,7 +11,7 @@ cells:
 
     **NGCM Summer School,**
 
-    **Southampton, June 2018**
+    **Southampton, July 2019**
 
   metadata:
     slideshow:
@@ -21,154 +21,6 @@ cells:
     ## Outline
 
     - Background
-       - Graphics Primer
-       - Data and its representation
-
-    - Creating datasets
-       - VTK datasets
-       - Creating datasets from Python
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Outline
-
-    - Background
-       - **Graphics Primer** $\Longleftarrow$
-       - Data and its representation
-
-    - Creating datasets
-       - VTK datasets
-       - Creating datasets from Python
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Introduction to graphics
-
-    * Visually represent things
-    * Fundamental elements: graphics primitives
-    * Rendering: conversion of data into graphics primitives
-    * Representation on screen: 3D object on 2D screen
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Graphics
-
-    * Two kinds: vector and raster graphics
-    * Vector: lines, circles, ellipses, splines, etc.
-    * Raster: pixels -- dots
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Graphics primitives
-    <img src="MEDIA/m2/primitives.png" width="80%" height="80%"/>
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Physical Vision
-
-    * Objects, their properties (color, opacity, texture etc.)
-
-    * Light source
-
-    * Light rays
-
-    * Eye
-
-    * Brain: interpretation, vision
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Rendering
-
-    * Ray tracing
-       * Image-order rendering
-       * Slow (done in software)
-       * More realistic
-
-    * Object order rendering
-       * Faster
-       * Hardware support
-       * Less realistic but interactive
-
-    * Surface rendering: render surfaces (lines, triangles,
-        polygons)
-
-    * Volume rendering: rendering ``volumes'' (fog, X-ray intensity,
-        MRI data etc.)
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Lights, camera, action!
-
-    * Colors: RGB (Red-Green-Blue), HSV (Hue-Saturation-Value)
-
-    * Opacity: 0.0 - transparent, 1.0 - opaque
-
-    * Lights:
-       * Ambient light: light from surroundings
-       * Diffuse lighting: reflection of light from object
-       * Specular lighting: direct reflection of light source from shiny object
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Lights, camera, action!
-
-    * Camera: position, orientation, focal point and clipping plane
-
-    * Projection:
-       * Parallel/orthographic: light rays enter parallel to camera
-       * Perspective: Rays pass through a point -- thus objects farther away
-         appear smaller
-    * Homogeneous coordinate systems are used $(x_h, y_h, z_h, w_h)$
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Practical aspects
-
-    * Implemented in graphics libraries
-
-    * Various 2D graphics libraries (quite easy)
-
-    * Hardware acceleration for high-perf. and interactive usage
-
-    * OpenGL: hardware accelerated, 3D graphics library
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
-    ## Outline
-
-    - Background
-       - Graphics Primer
        - **Data and its representation** $\Longleftarrow$
 
     - Creating datasets
@@ -270,7 +122,7 @@ cells:
     ## Topology and Grids
 
     * Layman definition: how are points of the space connected up to
-        form a line/surface/volume
+      form a line/surface/volume
 
     * *Grid* in scientific computing: points + topology
 
@@ -447,6 +299,17 @@ cells:
       slide_type: slide
 
 - markdown: |
+    ## A note on Cell Data
+
+    * Most algorithms work with point data
+
+    * Convert to point data: `CellDataToPointData`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
     ## Exercise
     <center>
     <img src="MEDIA/m2/mlab/points3d_ex.png"/>
@@ -497,26 +360,9 @@ cells:
       slide_type: slide
 
 - markdown: |
-    ## Recap
-
-    * Introduced various terms used in graphics
-
-    * Scientific data representation
-       * Dimensionality
-       * Geometry
-       * Topology
-       * Structured/Unstructured data
-       * Scalar/vector/tensor fields
-
-  metadata:
-    slideshow:
-      slide_type: slide
-
-- markdown: |
     ## Outline
 
     - Background
-       - Graphics Primer
        - Data and its representation
 
     - Creating datasets
@@ -534,7 +380,7 @@ cells:
         [www.vtk.org/VTK/img/file-formats.pdf](https://www.vtk.org/VTK/img/file-formats.pdf)
 
     * VTK data files support the following:
-      1. Structured points
+      1. Structured points (Image data)
       1. Rectilinear grid
       1. Structured grid
       1. Unstructured grid
@@ -545,6 +391,35 @@ cells:
   metadata:
     slideshow:
       slide_type: slide
+
+- markdown: |
+    ## The different datasets
+
+    - Implicitly connected datasets
+
+       - Structured points/Image data: fixed spacing, orthogonal
+       - Rectilinear grid: spacing variable but orthogonal coordinates
+       - Structured grids: mappable to a meshgrid
+
+    - Explicitly connected
+
+       - Polygonal data: surfaces
+       - Unstructured grid: volumes/surfaces
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Implicit ordering
+
+    * Important: Implicit ordering of points and cells.
+      The $X$ co-ordinate increases first, $Y$ next and $Z$ last.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
 
 - markdown: |
     ## General structure
@@ -562,7 +437,6 @@ cells:
     CELL_DATA n
     ...
     ```
-
 
     * Point and cell data can be supplied together.
     * `n` is the number of points or cells.
@@ -805,6 +679,8 @@ cells:
 
 - code: |
     mlab.pipeline.open('data/room_vis.wrl')
+
+- code: |
     mlab.pipeline.open('data/fire_ug.vtu')
 
 - markdown: |
@@ -824,7 +700,6 @@ cells:
     ## Outline
 
     - Background
-       - Graphics Primer
        - Data and its representation
 
     - Creating datasets
@@ -879,9 +754,8 @@ cells:
 - code: |
     from scipy import special
     # The scalar values.
-    x = (np.arange(50.0) - 25)/2.0
-    y = x.copy()
-    r = np.sqrt(x[:,None]**2+y**2)
+    x, y = np.mgrid[-10:10:51j, -10:10:51j]
+    r = np.sqrt(x**2 + y**2)
     z = 5.0*special.j0(r)  # Bessel function of order 0
 
   metadata:
@@ -892,9 +766,9 @@ cells:
     # Can't specify explicit points, they are implicit.
     # The volume specified using origin, spacing and dims.
     from tvtk.api import tvtk
-    spoints = tvtk.StructuredPoints(origin=(-12.5,-12.5,0),
-                                    spacing=(0.5,0.5,1),
-                                    dimensions=(50,50,1))
+    spoints = tvtk.StructuredPoints(origin=(-10, -10, 0),
+                                    spacing=(0.4, 0.4, 1),
+                                    dimensions=(51, 51, 1))
 
 - code: |
     # Transpose array data due to VTK's implicit ordering.
@@ -934,9 +808,8 @@ cells:
       slide_type: slide
 
 - code: |
-    x, y, z = np.ogrid[-5:5:128j,-5:5:128j,
+    x, y, z = np.mgrid[-5:5:128j,-5:5:128j,
                        -5:5:128j]
-    x, y, z = [t.astype('f') for t in (x, y, z)]
     scalars = np.sin(x*y*z)/(x*y*z)
 
 - code: |
@@ -1141,10 +1014,15 @@ cells:
     slideshow:
       slide_type: slide
 
+- code: |
+    from tvtk.api import write_data
+    write_data(ug, '/tmp/ug.vtu')
+    write_data(ug, '/tmp/ug.vtk')
+
 - markdown: |
     ## More information
 
-    * See the attached IPython notebook, `datasets.ipynb`
+    * See the  IPython notebook, `notebooks/datasets.ipynb`
     * Explore the code and visualizations
 
   metadata:
