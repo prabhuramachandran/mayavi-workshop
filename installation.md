@@ -47,9 +47,16 @@ If this works successfully, please move on to the "testing your installation" be
 To install Mayavi with conda try the following:
 
 ```
-$ conda install -c conda-forge numpy scipy apptools envisage jupyter
-$ pip install mayavi
+$ conda create -n mayavi
+$ conda activate mayavi  # or source activate mayavi
+$ conda install -c conda-forge numpy scipy traits jupyter ipywidgets ipyevents
+$ conda remove pyqt qt
+$ pip install mayavi pyqt5 jupyter
 ```
+
+We remove the pyqt from conda as it is an older version and doesn't work well
+with mayavi.
+
 
 On some architectures, you may be able to install the latest version of mayavi
 with conda itself. You could try that and if it installs the latest version of
@@ -59,13 +66,33 @@ instructions.
 If this works successfully, please move on to the "testing your installation"
 below.
 
+### Issues with conda
+
+- On conda-forge, the pyqt package is old (5.9.2) and will end up showing a
+  black screen when you use Mayavi.  The fix is to do the following::
+
+```
+conda remove pyqt qt
+pip install pyqt
+```
+
+You could also do away with pyqt and instead use pyside2 if you wish::
+
+```
+pip uninstall pyqt qt
+pip install pyside2
+```
+
+This will also work.  Test your installation to be sure.
+
+
 
 ## Using edm
 
 If you are using edm you can do the following:
 
 ```
-$ edm install numpy scipy apptools envisage jupyter
+$ edm install numpy scipy apptools envisage jupyter traits
 $ pip install mayavi pyqt5
 ```
 
