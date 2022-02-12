@@ -2,14 +2,11 @@ cells:
 
 - markdown: |
     # The `mayavi2` application
-    
+
     **Prabhu Ramachandran**
-    
+
     **Department of Aerospace Engineering, IIT Bombay**
     <br/>
-    
-    **NGCM Summer School,**
-    **Southampton, UK**
 
   metadata:
     slideshow:
@@ -17,7 +14,7 @@ cells:
 
 - markdown: |
     ## Outline
-    
+
     - Overview
     - UI features
     - Command line arguments
@@ -30,13 +27,13 @@ cells:
 
 - markdown: |
     ## Introduction
-    
+
     * Visualization without scripting
-    
+
     * Especially useful with data files
-    
+
     * Can be scripted
-    
+
     * Supports `mlab`
 
   metadata:
@@ -52,7 +49,7 @@ cells:
 
 - markdown: |
     ## Features
-    
+
     * Complete UI
     * Powerful command line options
     * Embedded Python
@@ -76,13 +73,13 @@ cells:
 
 - markdown: |
     ## Demo of UI features
-    
+
     * Basic UI
-    
+
     * Python shell integration
-    
+
     * Time-series support
-    
+
     * Script recording
 
   metadata:
@@ -104,25 +101,25 @@ cells:
 
 - markdown: |
     * `-d datafile.ext` : Load data file
-    
+
     * `-f FilterName` : Load filter
-    
+
     * `-m ModuleName` : Load module
-    
+
     * `-s python-string` : Evaluate Python expression
-    
+
     * `-x file.py` : Execute Python code
 
 
 - markdown: |
     ## Advanced options
-    
+
     * `-n` : new scene
-    
+
     * `-M` : new module manager
-    
+
     * `-o` : offscreen mode
-    
+
     * `-z filename` : load saved visualization
 
   metadata:
@@ -148,13 +145,13 @@ cells:
 
 - markdown: |
     ## Scripting from the command line
-    
+
     * `-s python-code`  is very powerful
-    
+
     * Takes Python expressions
-    
+
     * Applies to the last module/filter
-    
+
     * Can be called multiple times
 
   metadata:
@@ -191,18 +188,18 @@ cells:
 
 - markdown: |
     ## Exercise
-    
+
     * Visualize the `fire_ug.vtu`  dataset along with the
       `room_vis.wrl`  file
-    
+
     * Use one scalar cut plane with its normal along the y axis
-    
+
     * Add an iso-contour with the temperature set to 400.
-    
+
     * Do all these from the command line
-    
+
     * Hint: use the embedded Python shell in the app
-    
+
     * Hint: use script recording
 
   metadata:
@@ -235,9 +232,9 @@ cells:
 
 - markdown: |
     ## Using `mlab`
-    
+
     * Can import and use mlab
-    
+
     * Opening data: `mlab.pipeline.open`
     * Add dataset: `mlab.pipeline.add_dataset`
     * Use `lower_case_with_underscores`

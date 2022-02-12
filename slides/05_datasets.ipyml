@@ -9,10 +9,6 @@ cells:
 
     <br/>
 
-    **NGCM Summer School,**
-
-    **Southampton, July 2019**
-
   metadata:
     slideshow:
       slide_type: slide
@@ -845,6 +841,36 @@ cells:
     <center>
     <img src="notebooks/structured_points3d.png" width="50%" height="50%"/>
     </center>
+
+- markdown: |
+    ## Changing the data
+
+    - Change the `s` array directly!
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    s[:64, ...] = (np.sin(x)/(x+ y+ z))[:64, ...]
+    src.data_changed = True
+
+
+- markdown: |
+    ## Adding more attributes
+
+    - Note: `add_attribute` clobbers existing array with same name
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    src.add_attribute(array, 'name', category='point')
+    # See also:
+    src.remove_attribute(name, category='point')
+    src.rename_attribute(from_name, to_name, category='point')
+
 
 - markdown: |
     ## Structured Grid

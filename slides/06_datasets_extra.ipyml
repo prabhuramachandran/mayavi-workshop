@@ -2,16 +2,12 @@ cells:
 
 - markdown: |
     # VTK/Mayavi Datasets and Filters
-    
+
     **Prabhu Ramachandran**
-    
+
     **Department of Aerospace Engineering, IIT Bombay**
-    
+
     <br/>
-    
-    **NGCM Summer School,**
-    
-    **Southampton, UK**
 
   metadata:
     slideshow:
@@ -19,7 +15,7 @@ cells:
 
 - markdown: |
     ## Illustration of how to view unstructured points
-    
+
     Let us say you have a random collection of points and scalars associated
     with them but DO NOT know the topology. What do you do?
 
@@ -128,7 +124,7 @@ cells:
 
 - markdown: |
     ## Exercise
-    
+
     Modify the above 3D example to construct the points in all quadrants, the
     current set of points only lie in the first quadrant since $0 < x,y,z <
     1$.
